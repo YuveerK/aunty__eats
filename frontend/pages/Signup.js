@@ -5,9 +5,12 @@ import {
   TextInput,
   View,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { styles } from "../components/Signup/styles";
 import React, { useEffect, useState } from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Link } from "@react-navigation/native";
 
 const Signup = ({ navigation }) => {
   const [Email, setEmail] = useState("");
@@ -80,7 +83,7 @@ const Signup = ({ navigation }) => {
     } else {
       setPhoneNumberError(false);
     }
-  }, [Email]);
+  }, [Email, Password, ConfirmPassword, PhoneNumber]);
 
   const emailValidation = async (text) => {
     setEmail(text);
@@ -91,77 +94,117 @@ const Signup = ({ navigation }) => {
     }
   };
 
-  console.log(Email + "\n " + EmailError);
+  console.log(
+    Email +
+      "-----------" +
+      EmailError +
+      "\n" +
+      Password +
+      "-----------" +
+      PasswordError +
+      "\n" +
+      ConfirmPassword +
+      "-----------" +
+      ConfirmPasswordError +
+      "\n" +
+      PhoneNumber +
+      "-----------" +
+      PhoneNumberError +
+      "\n"
+  );
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.loginContainer}>
-          <View style={styles.inputField}>
-            <Text>Email</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={"Enter your email address"}
-              onChangeText={(text) => {
-                setEmail(text);
-                if (Email === "" || !Email.includes("@")) {
-                  setEmailError(true);
-                } else {
-                  setEmailError(false);
-                }
-              }}
-              value={Email}
-            />
+      <View style={styles.loginContainer}>
+        <ScrollView>
+          <View style={styles.loginForm}>
+            <View style={styles.inputField}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <MaterialCommunityIcons
+                  name="email-outline"
+                  size={24}
+                  color="black"
+                  style={{ marginRight: 10 }}
+                />
+                <Text
+                  style={[styles.label, { fontFamily: "Inter_400Regular" }]}
+                >
+                  Email
+                </Text>
+              </View>
+              <TextInput
+                style={styles.input}
+                onChangeText={setEmail}
+                value={Email}
+              />
+            </View>
 
-            {EmailError === "" && (
-              <Text style={{ color: "red" }}>Email required</Text>
-            )}
-          </View>
+            <View style={styles.inputField}>
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.label,
+                    {
+                      fontFamily: "Inter_400Regular",
+                    },
+                  ]}
+                >
+                  Password
+                </Text>
+              </View>
 
-          <View style={styles.inputField}>
-            <Text>Password</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setPassword}
-              placeholder={"Enter a password"}
-              value={Password}
-            />
+              <TextInput
+                style={styles.input}
+                onChangeText={setPassword}
+                value={Password}
+              />
+            </View>
 
-            {PasswordError === "" && (
-              <Text style={{ color: "red" }}>Password required</Text>
-            )}
-          </View>
+            <View style={styles.inputField}>
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.label,
+                    {
+                      fontFamily: "Inter_400Regular",
+                    },
+                  ]}
+                >
+                  Confirm Password
+                </Text>
+              </View>
 
-          <View style={styles.inputField}>
-            <Text>Confirm Password</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setConfirmPassword}
-              placeholder={"Confirm your password"}
-              value={ConfirmPassword}
-            />
-            {ConfirmPasswordError === "" && (
-              <Text style={{ color: "red" }}>Passwords do no match</Text>
-            )}
-          </View>
+              <TextInput
+                style={styles.input}
+                onChangeText={setConfirmPassword}
+                value={ConfirmPassword}
+              />
+            </View>
 
-          <View style={styles.inputField}>
-            <Text>Phone Number</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setPhoneNumber}
-              placeholder={"Enter your phone number"}
-              value={PhoneNumber}
-            />
-            {PhoneNumberError === "" && (
-              <Text style={{ color: "red" }}>Phone number required</Text>
-            )}
-          </View>
+            <View style={styles.inputField}>
+              <View style={styles.row}>
+                <Text
+                  style={[
+                    styles.label,
+                    {
+                      fontFamily: "Inter_400Regular",
+                    },
+                  ]}
+                >
+                  Phone Number
+                </Text>
+              </View>
 
-          <View style={{ marginVertical: 30 }}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setPhoneNumber}
+                value={PhoneNumber}
+              />
+            </View>
             <Button
               title="Create Account"
               style={styles.loginButton}
+              color={"#25292e"}
               onPress={createAccount}
               disabled={
                 EmailError === false &&
@@ -173,8 +216,14 @@ const Signup = ({ navigation }) => {
               }
             />
           </View>
-        </View>
-      </ScrollView>
+          <Text style={{ marginTop: 20, fontFamily: "Inter_400Regular" }}>
+            Already a member?{" "}
+            <Link to={"/Login"} style={{ fontSize: 16, color: "blue" }}>
+              Sign in
+            </Link>
+          </Text>
+        </ScrollView>
+      </View>
     </View>
   );
 };
