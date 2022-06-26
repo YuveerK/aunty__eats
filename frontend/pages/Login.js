@@ -15,7 +15,7 @@ const Login = ({ navigation }) => {
 
       <View style={styles.loginContainer}>
         <View style={styles.inputField}>
-          <Text>Email</Text>
+          <Text>Email1</Text>
           <TextInput
             style={styles.input}
             onChangeText={onChangeText}
